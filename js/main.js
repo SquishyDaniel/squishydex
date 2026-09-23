@@ -54,6 +54,10 @@ function create_pokemon_overview(filtered_pokemon_list) {
     }
 }
 
+function filter_with_search(on_input_event) {
+    console.log(on_input_event.target.value);
+}
+
 async function initialize() {
   get_pokemon();
 }
