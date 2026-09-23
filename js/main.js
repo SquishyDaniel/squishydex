@@ -28,14 +28,6 @@ async function fetch_json_from_url(url_to_fetch) {
     return data;
 }
 
-function create_pokemon_overview() {
-    overview_element.innerHTML = "";
-
-    for(var pokemon in pokemon_list) {
-        console.log(pokemon_list[pokemon]);
-    }
-}
-
 async function get_pokemon() {
     const result = await fetch_json_from_url(url);
     const fetched_list = result.results;
@@ -44,11 +36,26 @@ async function get_pokemon() {
         var fetched_pokemon = await fetch_json_from_url(fetched_list[species].url);
         pokemon_list.push(fetched_pokemon);
     }
+
+    create_pokemon_overview(pokemon_list);
+}
+
+function create_pokemon_overview(filtered_pokemon_list) {
+    overview_element.innerHTML = "";
+
+    for(var pokemon in filtered_pokemon_list) {
+        console.log(filtered_pokemon_list[pokemon]);
+        console.log(`Creating an overview for '${filtered_pokemon_list[pokemon].name}.'`)
+
+        const new_div = document.createElement("div");
+        new_div.setAttribute("class", "species");
+        overview_element.appendChild(new_div);
+        new_div.appendChild(document.createTextNode(filtered_pokemon_list[pokemon].name))
+    }
 }
 
 async function initialize() {
   get_pokemon();
-  create_pokemon_overview();
 }
 
 initialize();
