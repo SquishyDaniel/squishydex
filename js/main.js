@@ -1,6 +1,7 @@
 const url = "https://pokeapi.co/api/v2/pokemon";
 let pokemon_list = [];
 const overview_element = document.querySelector("#overview");
+const selection_element = document.querySelector("#type_filter");
 
 async function fetch_from_url(url_to_fetch) {
     try {  
@@ -54,8 +55,45 @@ function create_pokemon_overview(filtered_pokemon_list) {
     }
 }
 
+function match_types(pokemon, type_name) {
+    if (type_name == "none") {
+        return true;
+    }
+    
+    else {
+        for(type in pokemon.types) {
+            if(pokemon.types[type].type.name==type_name) {
+                return true;
+            }
+        }
+
+        return false;
+    } 
+}
+
+// This is called whenever someone types into the input search bar.
 function filter_with_search(on_input_event) {
-    console.log(on_input_event.target.value);
+    const search_term = on_input_event.target.value.trim(); 
+
+    if(pokemon_list.length > 0) {
+        let pokemon_list_filtered = pokemon_list.filter(
+            (pokemon) =>
+                pokemon.name.startsWith(search_term) && 
+                match_types(pokemon, selection_element.value )
+        );
+
+        create_pokemon_overview(pokemon_list_filtered);
+    }
+}
+
+function filter_with_selector(on_select_event) {
+    let pokemon_list_filtered = pokemon_list.filter(
+            (pokemon) => match_types(pokemon, on_select_event.target.value) == true,
+    );
+
+    create_pokemon_overview(pokemon_list_filtered);
+
+    return pokemon_list_filtered;
 }
 
 async function initialize() {

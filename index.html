@@ -10,6 +10,16 @@
         <p>
             <input type="search" name="search_bar" placeholder="search.." oninput="filter_with_search(event)">
         </p>
+        <select id="type_filter" onchange="filter_with_selector(event)">
+            <option selected="selected" value="none">None</option>
+            <option value="grass">Grass</option>
+            <option value="fire">Fire</option>
+            <option value="water">Water</option>
+            <option value="bug">Bug</option>
+            <option value="flying">Flying</option>
+            <option value="normal">Normal</option>
+            <option value="poison">Poison</option>
+        </select>
     </form>
     <div id="overview">
         <!-- Put all the Pokemen in here -->
