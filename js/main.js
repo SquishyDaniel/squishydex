@@ -6,7 +6,6 @@ const selection_element = document.querySelector("#type_filter");
 async function fetch_from_url(url_to_fetch) {
     try {  
         const response = await fetch(url_to_fetch);
-
         if(!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
